@@ -60,7 +60,11 @@ main {
 }
 
 .card {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 0.6rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .card__header,
@@ -81,11 +85,13 @@ main {
 
 .card__image img {
     width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card__actions {
     padding: 0.8rem;
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 .card__actions button,
@@ -100,10 +106,27 @@ main {
     background: white;
     border-radius: 3px;
     cursor: pointer;
+    padding: 0.2rem 0.6rem;
 }
 
 .btn:hover,
 .btn:active {
     background-color: #00695c;
+    color: white;
+}
+
+.btn-danger {
+    font: inherit;
+    border: 1px solid #690009;
+    color: #690009;
+    background: white;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 0.2rem 0.6rem;
+}
+
+.btn-danger:hover,
+.btn-danger:active {
+    background-color: #690009;
     color: white;
 }

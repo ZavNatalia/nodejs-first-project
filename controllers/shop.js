@@ -31,6 +31,15 @@ exports.getCart = (req, res) => {
         });
     });
 }
+exports.getOrders = (req, res) => {
+    // Orders.fetchAll((orders) => {
+        res.render('shop/orders', {
+            // items: orders,
+            pageTitle: 'Your Orders',
+            path: '/orders',
+        });
+    // });
+}
 
 exports.getCheckout = (req, res) => {
     res.render('shop/checkout', {
