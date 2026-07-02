@@ -1,7 +1,1 @@
-[
-  {
-    "title": "Book",
-    "price": "123",
-    "quantity": 10
-  }
-]
+{"products":[{"id":"123456789","qty":1},{"id":"987654321","qty":1},{"id":"987651234","qty":1}],"totalPrice":1636.48}
