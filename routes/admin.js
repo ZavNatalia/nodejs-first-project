@@ -17,6 +17,7 @@ router.post('/edit-product', postEditProduct);
 // /admin/add-product => POST
 router.post('/add-product', postAddProduct);
 
+// /admin/delete-product => POST
 router.post('/delete-product', postDeleteProduct)
 
 
