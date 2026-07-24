@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: yobasystems/alpine-mariadb:latest
+    container_name: alpine_mariadb_app
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      # Настройки базы данных
+      - MARIADB_ROOT_PASSWORD=root_secure_password_here
+      - MARIADB_DATABASE=my_project_db
+      - MARIADB_USER=db_user
+      - MARIADB_PASSWORD=user_secure_password_here
+    volumes:
+      # Постоянное хранилище (чтобы данные не пропали после перезапуска)
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - app_network
+
+volumes:
+  mariadb_data:
+    driver: local
+
+networks:
+  app_network:
+    driver: bridge

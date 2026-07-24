@@ -1,28 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+const pool = require('../util/database');
 const Cart = require('../models/cart');
-
-
-const p = path.join(
-    path.dirname(process.mainModule.filename),
-    'data',
-    'products.json'
-);
-
-const getProductsFromFile = cb => {
-    const p = path.join(
-        path.dirname(process.mainModule.filename),
-        'data',
-        'products.json'
-    );
-    fs.readFile(p, (err, fileContent) => {
-        if (err) {
-            return cb([]);
-        } else {
-            cb(JSON.parse(fileContent));
-        }
-    })
-}
 
 module.exports = class Product {
     constructor({id, title, imageUrl, price, description}) {
@@ -33,51 +10,37 @@ module.exports = class Product {
         this.description = description;
     }
 
-    save() {
-        getProductsFromFile(products => {
-            if (this.id) {
-                const existingProductIndex = products.findIndex(p => p.id === this.id);
-                const updatedProducts = [...products];
-                updatedProducts[existingProductIndex] = this;
-                fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
-                    if (err) {
-                        console.error(err);
-                    }
-                })
-            } else {
-                this.id = Math.random().toString();
-                products.push(this);
-                fs.writeFile(p, JSON.stringify(products), (err) => {
-                    if (err) {
-                        console.error(err);
-                    }
-                });
-            }
-        });
+    async save() {
+        let conn;
+        try {
+            // Берем свободное соединение из пула
+            conn = await pool.getConnection();
+
+            // Выполняем запрос
+            const rows = await conn.query("INSERT INTO products (title, price, imageUrl, description) VALUES (?, ?, ?, ?)",
+                [this.title, this.price, this.imageUrl, this.description]);
+
+            // Возвращаем первую найденную строку (или null)
+            return rows[0] || null;
+
+        } catch (err) {
+            console.error("Ошибка при работе с БД:", err);
+            throw err;
+        } finally {
+            // ОБЯЗАТЕЛЬНО: Возвращаем соединение обратно в пул
+            if (conn) conn.release();
+        }
     }
 
     static deleteById(id) {
-        getProductsFromFile(products => {
-            const product = products.find(prod => prod.id === id);
-            const updatedProducts = products.filter(prod => prod.id !== id);
-            fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
-                if (!err) {
-                    Cart.deleteProduct(id, product.price);
-                } else {
-                    console.error(err);
-                }
-            })
-        });
+
     }
 
-    static fetchAll(cb) {
-        getProductsFromFile(cb);
+    static fetchAll() {
+        return pool.execute("SELECT * FROM  products");
     }
 
-    static findById(id, cb) {
-        getProductsFromFile(products => {
-            const product = products.find(p => p.id === id);
-            cb(product);
-        })
+    static findById(id) {
+
     }
 }
