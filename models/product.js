@@ -33,7 +33,7 @@ module.exports = class Product {
     }
 
     static deleteById(id) {
-
+        return pool.execute("DELETE FROM products WHERE id = ?", [id]);
     }
 
     static fetchAll() {
@@ -41,6 +41,6 @@ module.exports = class Product {
     }
 
     static findById(id) {
-
+        return pool.execute("SELECT * FROM  products WHERE products.id = ?", [id]);
     }
 }

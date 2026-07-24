@@ -10,25 +10,3 @@ const pool = mariadb.createPool({
 });
 
 module.exports = pool;
-
-async function handleDatabaseOperations() {
-    let conn;
-    try {
-        // Grab a connection from the pool
-        conn = await pool.getConnection();
-
-        // Execute queries using standard SQL placeholders (?)
-        // const rows = await conn.query("SELECT * FROM users WHERE age > ?", [18]);
-        // console.log(rows);
-
-        // Insert data (Returns metadata like insertId)
-        // const res = await conn.query("INSERT INTO users (name, age) VALUES (?, ?)", ["Alex", 25]);
-        // console.log(`Inserted row with ID: ${res.insertId}`);
-
-    } catch (err) {
-        console.error(err);
-    } finally {
-        // Releases the connection back to the pool, does not close it permanently
-        if (conn) await conn.release();
-    }
-}
