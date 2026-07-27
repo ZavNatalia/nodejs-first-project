@@ -1,12 +1,11 @@
-const mariadb = require('mariadb');
+const { Sequelize } = require('sequelize');
 
-// Create a reusable pool configuration
-const pool = mariadb.createPool({
+const sequelize = new Sequelize('my_project_db', 'root', 'root_secure_password_here', {
     host: 'localhost',
-    user: 'db_user',
-    password: 'user_secure_password_here',
-    database: 'my_project_db',
-    connectionLimit: 5 // Maximum number of parallel connections
+    port: 3306,
+    dialect: 'mariadb',
+
+    logging: console.log, // можно поставить false
 });
 
-module.exports = pool;
+module.exports = sequelize;
