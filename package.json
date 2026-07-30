@@ -16,6 +16,9 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
