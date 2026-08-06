@@ -81,8 +81,8 @@ exports.postDeleteProduct = (req, res) => {
             console.log('Destroyed Product');
             res.redirect('/admin/products');
         })
-        .catch(error => {
-            console.log(error);
+        .catch(err => {
+            console.log('Error: ', err);
         });
 
 }

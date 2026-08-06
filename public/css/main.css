@@ -185,7 +185,7 @@ form {
     gap: 0.8rem;
 }
 
-.btn {
+.btn-primary {
     display: inline-block;
     padding: 0.2rem 0.6rem;
     text-decoration: none;
@@ -199,14 +199,15 @@ form {
     text-align: center;
 }
 
-.btn:hover,
-.btn:active {
+.btn-primary:hover,
+.btn-primary:active {
     background-color: #004b69;
     color: white;
 }
 
 .btn-danger {
     font: inherit;
+    font-size: 0.9rem;
     border: 1px solid #690009;
     color: #690009;
     background: white;
